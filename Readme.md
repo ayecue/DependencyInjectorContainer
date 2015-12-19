@@ -2,7 +2,7 @@
 
 ## Description:
 
-Dependency Injector Container like in AngularJS.
+Tiny library which does dependency injection. Basically same pattern like in AngularJS.
 
 ## Example:
 ```
