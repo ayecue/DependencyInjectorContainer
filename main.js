@@ -23,29 +23,29 @@
  *
  * @class DependencyInjectorContainer
  * @constructor
- * @param {Object} namespaceRange  Scope for namespaces.
+ * @param {Object} scope  Scope for namespaces.
  * @private
  */
-  function DependencyInjectorContainer(namespaceRange) {
-    this.scope = namespaceRange || {};
+  function DependencyInjectorContainer(scope) {
+    this.scope = scope || {};
   }
 
   /**
    * Set namespace in scope. Module will be instantly available.
    *
    * @method set
-   * @param {Object} module  Module to set.
+   * @chainable
    * @param {String} namespace  Module namespace.
+   * @param {Object} module  Module to set.
    * @param {Boolean} [override]  Should override namespace if set.
-   * @return {DependencyInjectorContainer}
    */
-  DependencyInjectorContainer.prototype.set = function(module, namespace, override) {
+  DependencyInjectorContainer.prototype.set = function(namespace, module, override) {
     if (typeof namespace !== 'string') {
-      throw new TypeError('Second argument must be string');
+      throw new TypeError('Namespace has to be a string.');
     }
 
     if (override !== true && this.scope.hasOwnProperty(namespace) === true) {
-      throw new Error(namespace + ' is aready defined');
+      throw new Error(namespace + ' is aready defined.');
     }
 
     this.scope[namespace] = module;
@@ -57,10 +57,10 @@
    * Extend namespace to scope. Will be injected as soon as load is called.
    *
    * @method extend
+   * @chainable
    * @param {String} namespace  Module namespace.
    * @param {Array} [dependencies]  Module dependencies.
    * @param {Object} definition  Module definition block.
-   * @return {DependencyInjectorContainer}
    */
   DependencyInjectorContainer.prototype.extend = function(namespace, dependencies, definition) {
     if (typeof dependencies === 'function') {
@@ -70,7 +70,7 @@
 
     definition.__dependencies__ = dependencies || [];
     definition.isDefinition = true;
-    this.set(definition, namespace);
+    this.set(namespace, definition);
 
     return this;
   };
@@ -84,11 +84,11 @@
    */
   DependencyInjectorContainer.prototype.get = function(namespace) {
     if (typeof namespace !== 'string') {
-      throw new TypeError('Namespace has to be a string');
+      throw new TypeError('Namespace has to be a string.');
     }
 
     if (typeof this.scope[namespace] === 'undefined') {
-      throw new Error(namespace + ' not found');
+      throw new Error(namespace + ' not found.');
     }
 
     return this.scope[namespace];
@@ -98,7 +98,7 @@
    * Initialize all defenitions.
    *
    * @method load
-   * @return {DependencyInjectorContainer}
+   * @chainable
    */
   DependencyInjectorContainer.prototype.load = function() {
     var namespaces = Object.keys(this.scope).filter(function(namespace){
@@ -148,7 +148,7 @@
       }, this);
 
       try {
-        this.set(definition.apply(this, args) || {}, namespace, true);
+        this.set(namespace, definition.apply(this, args) || {}, true);
       } catch (e) {
         console.error(namespace, e);
       }

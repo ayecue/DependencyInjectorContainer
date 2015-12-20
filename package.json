@@ -1,7 +1,7 @@
 {
   "name": "dependency-injector-container",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "Tiny library which does dependency injection. Basically same pattern like in AngularJS.",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/ayecue/DependencyInjectorContainer#readme",
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-contrib-uglify": "^0.11.0"
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-yuidoc": "^0.10.0"
   }
 }

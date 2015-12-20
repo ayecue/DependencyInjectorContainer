@@ -1,0 +1,130 @@
+{
+    "project": {
+        "name": "dependency-injector-container",
+        "description": "Tiny library which does dependency injection. Basically same pattern like in AngularJS.",
+        "version": "1.0.1",
+        "url": "https://github.com/ayecue/DependencyInjectorContainer#readme"
+    },
+    "files": {
+        "main.js": {
+            "name": "main.js",
+            "modules": {},
+            "classes": {
+                "DependencyInjectorContainer": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "DependencyInjectorContainer": {
+            "name": "DependencyInjectorContainer",
+            "shortname": "DependencyInjectorContainer",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "main.js",
+            "line": 21,
+            "description": "Dependency injector container like in AngualarJS.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "scope",
+                    "description": "Scope for namespaces.",
+                    "type": "Object"
+                }
+            ],
+            "access": "private",
+            "tagname": ""
+        }
+    },
+    "elements": {},
+    "classitems": [
+        {
+            "file": "main.js",
+            "line": 33,
+            "description": "Set namespace in scope. Module will be instantly available.",
+            "itemtype": "method",
+            "name": "set",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "namespace",
+                    "description": "Module namespace.",
+                    "type": "String"
+                },
+                {
+                    "name": "module",
+                    "description": "Module to set.",
+                    "type": "Object"
+                },
+                {
+                    "name": "override",
+                    "description": "Should override namespace if set.",
+                    "type": "Boolean",
+                    "optional": true
+                }
+            ],
+            "class": "DependencyInjectorContainer"
+        },
+        {
+            "file": "main.js",
+            "line": 56,
+            "description": "Extend namespace to scope. Will be injected as soon as load is called.",
+            "itemtype": "method",
+            "name": "extend",
+            "chainable": 1,
+            "params": [
+                {
+                    "name": "namespace",
+                    "description": "Module namespace.",
+                    "type": "String"
+                },
+                {
+                    "name": "dependencies",
+                    "description": "Module dependencies.",
+                    "type": "Array",
+                    "optional": true
+                },
+                {
+                    "name": "definition",
+                    "description": "Module definition block.",
+                    "type": "Object"
+                }
+            ],
+            "class": "DependencyInjectorContainer"
+        },
+        {
+            "file": "main.js",
+            "line": 78,
+            "description": "Receive module.",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "namespace",
+                    "description": "Module namespace.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
+            "class": "DependencyInjectorContainer"
+        },
+        {
+            "file": "main.js",
+            "line": 97,
+            "description": "Initialize all defenitions.",
+            "itemtype": "method",
+            "name": "load",
+            "chainable": 1,
+            "class": "DependencyInjectorContainer"
+        }
+    ],
+    "warnings": []
+}

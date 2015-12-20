@@ -1,8 +1,20 @@
 # dependency-injector-container
 
-## Description:
+> Tiny library which does dependency injection. Basically same pattern like in AngularJS.
 
-Tiny library which does dependency injection. Basically same pattern like in AngularJS.
+
+## Getting Started
+Install this plugin with this command:
+
+```shell
+npm install dependency-injector-container
+```
+
+
+## API
+
+[API Documentation](http://rawgit.com/ayecue/DependencyInjectorContainer/master/doc/index.html)
+
 
 ## Example:
 ```
