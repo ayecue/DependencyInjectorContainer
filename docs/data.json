@@ -2,7 +2,7 @@
     "project": {
         "name": "dependency-injector-container",
         "description": "Tiny library which does dependency injection. Basically same pattern like in AngularJS.",
-        "version": "1.0.1",
+        "version": "1.1.0",
         "url": "https://github.com/ayecue/DependencyInjectorContainer#readme"
     },
     "files": {
@@ -27,7 +27,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "main.js",
-            "line": 21,
+            "line": 29,
             "description": "Dependency injector container like in AngualarJS.",
             "is_constructor": 1,
             "params": [
@@ -45,7 +45,35 @@
     "classitems": [
         {
             "file": "main.js",
-            "line": 33,
+            "line": 47,
+            "description": "Assert helper.",
+            "itemtype": "method",
+            "name": "assert",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "condition",
+                    "description": "",
+                    "type": "Boolean"
+                },
+                {
+                    "name": "message",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "type",
+                    "description": "",
+                    "type": "Mixed",
+                    "optional": true
+                }
+            ],
+            "class": "DependencyInjectorContainer"
+        },
+        {
+            "file": "main.js",
+            "line": 62,
             "description": "Set namespace in scope. Module will be instantly available.",
             "itemtype": "method",
             "name": "set",
@@ -72,7 +100,7 @@
         },
         {
             "file": "main.js",
-            "line": 56,
+            "line": 84,
             "description": "Extend namespace to scope. Will be injected as soon as load is called.",
             "itemtype": "method",
             "name": "extend",
@@ -99,8 +127,8 @@
         },
         {
             "file": "main.js",
-            "line": 78,
-            "description": "Receive module.",
+            "line": 108,
+            "description": "Receive module. Will automatically initialize module with all it dependencies if it's not already loaded.",
             "itemtype": "method",
             "name": "get",
             "params": [
@@ -118,7 +146,55 @@
         },
         {
             "file": "main.js",
-            "line": 97,
+            "line": 126,
+            "description": "Evaluate defenition.",
+            "itemtype": "method",
+            "name": "evalDefinition",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "namespace",
+                    "description": "Module namespace.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
+            "class": "DependencyInjectorContainer"
+        },
+        {
+            "file": "main.js",
+            "line": 166,
+            "description": "Load one defenition with all it dependencies. (Use this if you just want to load certain modules and not all)\nIf you want to load via namespace use .get instead.",
+            "itemtype": "method",
+            "name": "loadDefinition",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "definition",
+                    "description": "Definition block.",
+                    "type": "Function"
+                },
+                {
+                    "name": "excludes",
+                    "description": "Modules to exclude from load.",
+                    "type": "Array",
+                    "optional": true
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Object"
+            },
+            "class": "DependencyInjectorContainer"
+        },
+        {
+            "file": "main.js",
+            "line": 219,
             "description": "Initialize all defenitions.",
             "itemtype": "method",
             "name": "load",
