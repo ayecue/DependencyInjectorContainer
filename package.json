@@ -1,6 +1,6 @@
 {
   "name": "dependency-injector-container",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Tiny library which does dependency injection. Basically same pattern like in AngularJS.",
   "main": "main.js",
   "scripts": {

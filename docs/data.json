@@ -2,7 +2,7 @@
     "project": {
         "name": "dependency-injector-container",
         "description": "Tiny library which does dependency injection. Basically same pattern like in AngularJS.",
-        "version": "1.1.0",
+        "version": "1.1.1",
         "url": "https://github.com/ayecue/DependencyInjectorContainer#readme"
     },
     "files": {
@@ -10,6 +10,7 @@
             "name": "main.js",
             "modules": {},
             "classes": {
+                "Definition": 1,
                 "DependencyInjectorContainer": 1
             },
             "fors": {},
@@ -18,6 +19,38 @@
     },
     "modules": {},
     "classes": {
+        "Definition": {
+            "name": "Definition",
+            "shortname": "Definition",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "main.js",
+            "line": 29,
+            "description": "Definition block.",
+            "access": "private",
+            "tagname": "",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "namespace",
+                    "description": "Definition name.",
+                    "type": "String"
+                },
+                {
+                    "name": "dependencies",
+                    "description": "Definition dependencies.",
+                    "type": "Array"
+                },
+                {
+                    "name": "definition",
+                    "description": "Definition.",
+                    "type": "Function"
+                }
+            ]
+        },
         "DependencyInjectorContainer": {
             "name": "DependencyInjectorContainer",
             "shortname": "DependencyInjectorContainer",
@@ -27,7 +60,7 @@
             "plugin_for": [],
             "extension_for": [],
             "file": "main.js",
-            "line": 29,
+            "line": 47,
             "description": "Dependency injector container like in AngualarJS.",
             "is_constructor": 1,
             "params": [
@@ -36,16 +69,14 @@
                     "description": "Scope for namespaces.",
                     "type": "Object"
                 }
-            ],
-            "access": "private",
-            "tagname": ""
+            ]
         }
     },
     "elements": {},
     "classitems": [
         {
             "file": "main.js",
-            "line": 47,
+            "line": 64,
             "description": "Assert helper.",
             "itemtype": "method",
             "name": "assert",
@@ -73,7 +104,7 @@
         },
         {
             "file": "main.js",
-            "line": 62,
+            "line": 79,
             "description": "Set namespace in scope. Module will be instantly available.",
             "itemtype": "method",
             "name": "set",
@@ -100,7 +131,7 @@
         },
         {
             "file": "main.js",
-            "line": 84,
+            "line": 101,
             "description": "Extend namespace to scope. Will be injected as soon as load is called.",
             "itemtype": "method",
             "name": "extend",
@@ -127,7 +158,7 @@
         },
         {
             "file": "main.js",
-            "line": 108,
+            "line": 125,
             "description": "Receive module. Will automatically initialize module with all it dependencies if it's not already loaded.",
             "itemtype": "method",
             "name": "get",
@@ -146,8 +177,8 @@
         },
         {
             "file": "main.js",
-            "line": 126,
-            "description": "Evaluate defenition.",
+            "line": 143,
+            "description": "Evaluate Definition.",
             "itemtype": "method",
             "name": "evalDefinition",
             "access": "private",
@@ -167,8 +198,8 @@
         },
         {
             "file": "main.js",
-            "line": 166,
-            "description": "Load one defenition with all it dependencies. (Use this if you just want to load certain modules and not all)\nIf you want to load via namespace use .get instead.",
+            "line": 183,
+            "description": "Load one Definition with all it dependencies. (Use this if you just want to load certain modules and not all)\nIf you want to load via namespace use .get instead.",
             "itemtype": "method",
             "name": "loadDefinition",
             "access": "private",
@@ -194,8 +225,8 @@
         },
         {
             "file": "main.js",
-            "line": 219,
-            "description": "Initialize all defenitions.",
+            "line": 236,
+            "description": "Initialize all Definitions.",
             "itemtype": "method",
             "name": "load",
             "chainable": 1,

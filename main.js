@@ -27,22 +27,39 @@
   var DEFINITION_CYCLIC_DEPENDENCY = 'Cyclic dependency in %1 and %2.'; //Thrown if there are cyclic dependencies.
 
   /**
+   * Definition block.
+   *
+   * @class Definition
+   * @private
+   * @constructor
+   * @param {String} namespace  Definition name.
+   * @param {Array} dependencies  Definition dependencies.
+   * @param {Function} definition  Definition.
+   */
+  function Definition(namespace, dependencies, definition) {
+    var me = this;
+
+    me.name = namespace;
+    me.deps = dependencies || [];
+    me.def = definition;
+  }
+
+  /**
    * Dependency injector container like in AngualarJS.
    *
    * @class DependencyInjectorContainer
    * @constructor
    * @param {Object} scope  Scope for namespaces.
-   * @private
    */
   function DependencyInjectorContainer(scope) {
-    var hasProperty;
+    var me = this;
 
     scope = scope || {};
 
-    this.set = set;
-    this.get = get;
-    this.extend = extend;
-    this.load = load;
+    me.set = set;
+    me.get = get;
+    me.extend = extend;
+    me.load = load;
 
     /**
      * Assert helper.
@@ -79,7 +96,7 @@
       scope[namespace] = module;
 
       return this;
-    };
+    }
 
     /**
      * Extend namespace to scope. Will be injected as soon as load is called.
@@ -96,14 +113,14 @@
         dependencies = undefined;
       }
 
-      definition.__dependencies__ = dependencies || [];
-      definition.isDefinition = true;
-      definition.namespace = namespace;
-
-      set(namespace, definition);
+      set(namespace, new Definition(
+        namespace,
+        dependencies,
+        definition
+      ));
 
       return this;
-    };
+    }
 
     /**
      * Receive module. Will automatically initialize module with all it dependencies if it's not already loaded.
@@ -121,10 +138,10 @@
       );
 
       return loadDefinition(scope[namespace]);
-    };
+    }
 
     /**
-     * Evaluate defenition.
+     * Evaluate Definition.
      *
      * @method evalDefinition
      * @private
@@ -136,14 +153,14 @@
       var compiled;
       var depDefinition;
 
-      if (definition.isDefinition !== true) {
+      if (!(definition instanceof Definition)) {
         return definition;
       }
 
-      args = definition.__dependencies__.map(function(depNamespace) {
+      args = definition.deps.map(function(depNamespace) {
         depDefinition = get(depNamespace);
 
-        if (depDefinition.isDefinition === true) {
+        if (depDefinition instanceof Definition) {
           console.warn(
             DEFINITION_NOT_INITIALIZED
             .replace('%d', depNamespace)
@@ -154,17 +171,17 @@
       });
 
       try {
-        compiled = definition.apply(null, args) ||  {};
-        set(definition.namespace, compiled, true);
+        compiled = definition.def.apply(null, args) ||  {};
+        set(definition.name, compiled, true);
       } catch (e) {
-        console.error(definition.namespace, e);
+        console.error(definition.name, e);
       }
 
       return compiled;
-    };
+    }
 
     /**
-     * Load one defenition with all it dependencies. (Use this if you just want to load certain modules and not all)
+     * Load one Definition with all it dependencies. (Use this if you just want to load certain modules and not all)
      * If you want to load via namespace use .get instead.
      *
      * @method loadDefinition
@@ -176,23 +193,23 @@
     function loadDefinition(definition, excludes) {
       var sortedDefinitions = [];
 
-      if (definition.isDefinition !== true) {
+      if (!(definition instanceof Definition)) {
         return definition;
       }
 
       excludes = excludes ||  [];
       excludes.push(definition);
 
-      definition.__dependencies__.forEach(function(depNamespace) {
+      definition.deps.forEach(function(depNamespace) {
         var depDefinition = get(depNamespace);
         var excluded;
         var result;
 
-        if (depDefinition.isDefinition !== true) {
+        if (!(depDefinition instanceof Definition)) {
           return;
         }
 
-        if (depDefinition.__dependencies__.indexOf(definition.namespace) !== -1) {
+        if (depDefinition.deps.indexOf(definition.namespace) !== -1) {
           console.error(
             DEFINITION_CYCLIC_DEPENDENCY
             .replace('%1', definition.namespace)
@@ -202,7 +219,7 @@
         }
 
         excluded = excludes.some(function(d) {
-          return depDefinition.namespace !== d.namespace;
+          return depDefinition.name !== d.name;
         });
 
         if (excluded === false) {
@@ -214,17 +231,17 @@
       });
 
       return evalDefinition(definition);
-    };
+    }
 
     /**
-     * Initialize all defenitions.
+     * Initialize all Definitions.
      *
      * @method load
      * @chainable
      */
     function load() {
       var namespaces = Object.keys(scope).filter(function(namespace) {
-        return get(namespace).isDefinition === true;
+        return get(namespace) instanceof Definition;
       });
       var sortedNamespaces = [];
       var queue = function(collection) {
@@ -232,8 +249,8 @@
 
         collection.forEach(function(namespace) {
           var isRequired = namespaces.some(function(m) {
-            if (m !== namespace && get(m).__dependencies__.indexOf(namespace) !== -1) {
-              if (get(namespace).__dependencies__.indexOf(m) !== -1) {
+            if (m !== namespace && get(m).deps.indexOf(namespace) !== -1) {
+              if (get(namespace).deps.indexOf(m) !== -1) {
                 console.error(
                   DEFINITION_CYCLIC_DEPENDENCY
                   .replace('%1', namespace)
@@ -267,7 +284,7 @@
       });
 
       return this;
-    };
+    }
   }
 
   return DependencyInjectorContainer;
